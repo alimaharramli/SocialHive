@@ -13,7 +13,6 @@ export default function UpdateProfile() {
     const [error, setError] = useState('')
     const [success, setSuccess] = useState('')
     const [loading, setLoading] = useState(false)
-    const [curemail, setCurrentEmail] = useState(currentUser.email)
     async function handleSubmit(e){
         e.preventDefault()
 
@@ -38,7 +37,10 @@ export default function UpdateProfile() {
                 })
             }
             if(emailRef.current.value !== emailRef.current.placeholder){
-                updateEmail(emailRef.current.value).catch(function(error){
+                updateEmail(emailRef.current.value).then(function(event){
+                    setSuccess("Verification email sent!")
+                    setError('')
+                }).catch(function(error){
                     var errorCode = error.code;
                     console.log(errorCode)     
                     setError(errorMessage(errorCode))
@@ -46,7 +48,6 @@ export default function UpdateProfile() {
                     return
                 })
             }
-            setCurrentEmail(emailRef.current.value)
             formRef.current.reset()
         }).catch(function(error) {
             var errorCode = error.code;
@@ -68,7 +69,7 @@ export default function UpdateProfile() {
                     <Form onSubmit={handleSubmit} ref={formRef}>
                         <Form.Group id="email">
                             <Form.Label>Email</Form.Label>
-                            <Form.Control type="email" ref={emailRef} required defaultValue={curemail}/>
+                            <Form.Control type="email" ref={emailRef} required defaultValue={currentUser.email}/>
                         </Form.Group>
                         <Form.Group id="cur-password">
                             <Form.Label>Current Password</Form.Label>
