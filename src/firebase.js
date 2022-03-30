@@ -1,6 +1,8 @@
 import firebase from "firebase/compat/app"
 import "firebase/compat/auth"
 
+
+// Config of Database
 const firebaseConfig = {
     apiKey: "AIzaSyBhHEu4JlOv5NsmT2zVq-qu5kdn2f6Rb9U",
     authDomain: "socialhive-67b90.firebaseapp.com",
@@ -11,6 +13,7 @@ const firebaseConfig = {
     measurementId: "G-E75GP2M0ZT"
 }
 
+// Possible Errors and Corresponding Codes
 export const error_codes = {
     "auth/wrong-password": "The password is invalid or the user does not have a password.",
     "auth/claims-too-large": "The claims payload provided to setCustomUserClaims() exceeds the maximum allowed size of 1000 bytes.",

@@ -3,6 +3,8 @@ import { Form, Button, Card, Alert } from 'react-bootstrap'
 import {useAuth, errorMessage} from "../contexts/AuthContext"
 import { Link, Navigate } from "react-router-dom"
 
+
+
 export default function Register() {
     const emailRef = useRef()
     const passwordRef = useRef()
@@ -14,18 +16,20 @@ export default function Register() {
 
     async function handleSubmit(e){
         e.preventDefault()
-
+        // Check password and its confirmation matches
         if( passwordRef.current.value !== passwordConfirmRef.current.value ){
             return setError('Passwords do not match')
         }
     
-        setLoading(true)
+        setLoading(true) // Page is in loading mode until process is handled
+        // Register new user
         await register(emailRef.current.value, passwordRef.current.value).then(function(value){
             localStorage.setItem("VerifyMail","You have registered successfully. Check your email for verification link")
             setError('')
-            value.user.sendEmailVerification()
+            value.user.sendEmailVerification() // Send Email Verification
             logout()
         }).catch(function(error) {
+            // Get error message
             var errorCode = error.code;
             console.log(errorCode)     
             setError(errorMessage(errorCode))
@@ -33,10 +37,11 @@ export default function Register() {
         })
 
         console.log(error)
-        setLoading(false)
+        setLoading(false) // Process is finished. Page is back to the normal state
     }
     const [redirectNow, setRedirectNow] = useState(false);
     return (
+        // HTML page
         <>
             <Card className="mt-2">  
                 <Card.Body style={{'backgroundColor': '#e9ecef'}}>

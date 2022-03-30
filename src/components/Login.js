@@ -2,7 +2,9 @@ import React, { useRef, useState } from 'react'
 import { Form, Button, Card, Alert } from 'react-bootstrap'
 import {useAuth,errorMessage} from "../contexts/AuthContext"
 import { Link, Navigate } from "react-router-dom"
-export default function Register() {
+
+// Login
+export default function Login() {
     const emailRef = useRef()
     const passwordRef = useRef()
     const {login,logout} = useAuth()
@@ -10,13 +12,16 @@ export default function Register() {
     const [success, setSuccess] = useState('')
     const [loading, setLoading] = useState(false)
 
+    // Handle Submit Process
     async function handleSubmit(e){
         e.preventDefault()
         localStorage.removeItem("VerifyError")
         localStorage.removeItem("VerifyMail")
         
-        setLoading(true)
+        setLoading(true)  // Page is in loading mode until process is handled
+
         await login(emailRef.current.value, passwordRef.current.value).then(function(value){
+            // Check if email is verified 
             if(value.user.emailVerified){
                 setSuccess("You have logged in successfully")
                 setError('')
@@ -25,15 +30,15 @@ export default function Register() {
                 setSuccess('')
                 logout()
             }
-            // navigate("/")
         }).catch(function(error) {
+            // get error message
             var errorCode = error.code;
             console.log(errorCode)     
             setError(errorMessage(errorCode))
             setSuccess('')
         })
         
-        setLoading(false)
+        setLoading(false) // Process is finished. Page is back to the normal state
     }
 
     const [redirectNow, setRedirectNow] = useState(false);

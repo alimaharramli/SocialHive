@@ -3,6 +3,7 @@ import { Form, Button, Card, Alert } from 'react-bootstrap'
 import {useAuth,errorMessage} from "../contexts/AuthContext"
 import { Link } from "react-router-dom"
 
+
 export default function UpdateProfile() {
     const emailRef = useRef()
     const curPasswordRef = useRef()
@@ -17,17 +18,19 @@ export default function UpdateProfile() {
         e.preventDefault()
 
         
-        
+        // Check if password and its confirmation is identical
         if( passwordRef.current.value !== passwordConfirmRef.current.value ){
             return setError('Passwords do not match')
         }
 
-        setLoading(true)
+        setLoading(true) // Page is in loading mode until process is handled
 
+        // Update password
         await checkPassword(curPasswordRef.current.value).then(function(value){
             setSuccess("Profile Updated")
             setError('')
             if(passwordRef.current.value){
+                // getting error messages
                 updatePassword(passwordRef.current.value).catch(function(error){
                     var errorCode = error.code;
                     console.log(errorCode)     
@@ -36,6 +39,7 @@ export default function UpdateProfile() {
                     return
                 })
             }
+            //Update email
             if(emailRef.current.value !== emailRef.current.placeholder){
                 updateEmail(emailRef.current.value).then(function(event){
                     setSuccess("Verification email sent!")
@@ -48,7 +52,7 @@ export default function UpdateProfile() {
                     return
                 })
             }
-            formRef.current.reset()
+            formRef.current.reset() // Reset Form
         }).catch(function(error) {
             var errorCode = error.code;
             console.log(errorCode)     
@@ -56,9 +60,9 @@ export default function UpdateProfile() {
             setSuccess('')
         })
         
-        setLoading(false)
+        setLoading(false) // Process is finished. Page is back to the normal state
     }
-
+// HTML page of Update Profile Page
     return (
         <>
             <Card className="mt-2">  

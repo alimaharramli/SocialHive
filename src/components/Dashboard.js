@@ -10,15 +10,16 @@ export default function Dashboard() {
     const navigate = useNavigate()
 
     async function handleLogout(e){
-        setLoading(true)
+        setLoading(true) // Page is in loading mode until process is handled
         logout().then(function(value){
             navigate("/login")
         }).catch(function(error){
+            // get error code
             var errorCode = error.code
             console.log(errorCode)   
             setError(errorMessage(errorCode))
         })
-        setLoading(false)
+        setLoading(false) // Process is finished. Page is back to the normal state
     }  
 
     return (

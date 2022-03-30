@@ -11,6 +11,7 @@ import UpdateProfile from "./UpdateProfile"
 
 function App() {
   return (
+    //Main Container of Application
       <Container 
         className="d-flex align-items-center justify-content-center"
         style={{ minHeight: "100vh" }}
