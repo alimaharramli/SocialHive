@@ -8,6 +8,7 @@ import Login from "./Login"
 import PrivateRoute from './PrivateRoute'
 import ForgotPassword from './ForgotPassword'
 import UpdateProfile from "./UpdateProfile"
+import ChatRoom from "./ChatRoom"
 
 function App() {
   return (
@@ -22,6 +23,8 @@ function App() {
               <Routes>
                 <Route exact path="/" element={<PrivateRoute user={1} redir="/login"> <Dashboard/></PrivateRoute>}/>
                 <Route path="/update-profile" element={<PrivateRoute user={1} redir="/login"> <UpdateProfile/></PrivateRoute>}/>
+                <Route path="/chat-room" element={<PrivateRoute user={1} redir="/chat-room"> <ChatRoom/></PrivateRoute>}/>
+                
                 <Route path="/register" element={<PrivateRoute user={0} redir="/"><Register/></PrivateRoute>} />
                 <Route path="/login" element={<PrivateRoute user={0} redir="/"> <Login/></PrivateRoute>} />
                 <Route path="/forgot-password" element={<PrivateRoute user={0} redir="/"> <ForgotPassword/></PrivateRoute>}/>

@@ -2,7 +2,7 @@ import React, {useState} from 'react'
 import {Card,Button,Alert} from 'react-bootstrap'
 import {Link} from 'react-router-dom'
 import {useAuth, errorMessage} from "../contexts/AuthContext"
-import {useNavigate} from "react-router-dom"
+import {useNavigate,Navigate} from "react-router-dom"
 export default function Dashboard() {
     const {currentUser,logout} = useAuth()
     const [loading,setLoading] = useState()
@@ -27,7 +27,8 @@ export default function Dashboard() {
             
             <Card className="mt-2">
                 <Card.Header>
-                    <h2>Welcome</h2>
+                    <h2> Welcome, {currentUser.displayName}</h2>
+                    <Link to="/chat-room" className='btn btn-primary centered'>Enter Chat Room</Link>
                 </Card.Header>
                 <Card.Body>
                         {error && <Alert variant="danger">{error}</Alert>}
@@ -35,6 +36,7 @@ export default function Dashboard() {
                         <Link to="/update-profile" className="btn btn-primary w-100 mt-3">
                             Update Profile
                         </Link>
+                        
                 </Card.Body>
             </Card>
             <div className="w-100 text-center mt-2">

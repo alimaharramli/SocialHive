@@ -4,14 +4,14 @@ import "firebase/compat/auth"
 
 // Config of Database
 const firebaseConfig = {
-    apiKey: "AIzaSyBhHEu4JlOv5NsmT2zVq-qu5kdn2f6Rb9U",
-    authDomain: "socialhive-67b90.firebaseapp.com",
-    projectId: "socialhive-67b90",
-    storageBucket: "socialhive-67b90.appspot.com",
-    messagingSenderId: "368805507783",
-    appId: "1:368805507783:web:868c2add4736f2eb9a44e2",
-    measurementId: "G-E75GP2M0ZT"
-}
+  apiKey: "AIzaSyBhHEu4JlOv5NsmT2zVq-qu5kdn2f6Rb9U",
+  authDomain: "socialhive-67b90.firebaseapp.com",
+  projectId: "socialhive-67b90",
+  storageBucket: "socialhive-67b90.appspot.com",
+  messagingSenderId: "368805507783",
+  appId: "1:368805507783:web:868c2add4736f2eb9a44e2",
+  measurementId: "G-E75GP2M0ZT"
+  };
 
 // Possible Errors and Corresponding Codes
 export const error_codes = {
@@ -152,6 +152,7 @@ export const error_codes = {
 }
 
 const app = firebase.initializeApp(firebaseConfig)
+
 
 export const auth = app.auth()
 export const authlib = firebase.auth

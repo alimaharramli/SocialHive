@@ -72,7 +72,7 @@ export default function Login() {
                 </Card.Body>
             </Card>
         
-            <div className="w-100 text-center mt-2">
+            <div className="w-100 text-center mt-2 color2">
                 You don't have an account? <Link to="/register">Register</Link>
             </div>
         </>

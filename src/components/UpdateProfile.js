@@ -64,7 +64,7 @@ export default function UpdateProfile() {
     }
 // HTML page of Update Profile Page
     return (
-        <>
+        <div>
             <Card className="mt-2">  
                 <Card.Body style={{'backgroundColor': '#e9ecef'}}>
                     <h2 className="text-center mb-4">Update Profile</h2>
@@ -95,6 +95,6 @@ export default function UpdateProfile() {
             <div className="w-100 text-center mt-2">
                 <Link to="/">Go back</Link>
             </div>
-        </>
+        </div>
     )
 }

@@ -19,7 +19,7 @@ export function AuthProvider( { children } ) {
     function register(email,password){
         return auth.createUserWithEmailAndPassword(email,password)
     }
-
+    
     function login(email,password){
         return auth.signInWithEmailAndPassword(email,password)
     }
@@ -39,7 +39,9 @@ export function AuthProvider( { children } ) {
     function updateEmail(email){
         return currentUser.verifyBeforeUpdateEmail(email)
     }
-    
+    function updateProfile(object){
+        return currentUser.updateProfile(object)
+    }
     function updatePassword(password){
         return currentUser.updatePassword(password)
     }
@@ -61,7 +63,8 @@ export function AuthProvider( { children } ) {
         resetPassword,
         checkPassword,
         updateEmail,
-        updatePassword
+        updatePassword,
+        updateProfile
     }
 
     return (
