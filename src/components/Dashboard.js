@@ -2,7 +2,7 @@ import React, {useState} from 'react'
 import {Card,Button,Alert} from 'react-bootstrap'
 import {Link} from 'react-router-dom'
 import {useAuth, errorMessage} from "../contexts/AuthContext"
-import {useNavigate} from "react-router-dom"
+import {useNavigate,Navigate} from "react-router-dom"
 export default function Dashboard() {
     const {currentUser,logout} = useAuth()
     const [loading,setLoading] = useState()
@@ -10,24 +10,22 @@ export default function Dashboard() {
     const navigate = useNavigate()
 
     async function handleLogout(e){
-        setLoading(true) // Page is in loading mode until process is handled
+        setLoading(true)
         logout().then(function(value){
             navigate("/login")
         }).catch(function(error){
-            // get error code
             var errorCode = error.code
             console.log(errorCode)   
             setError(errorMessage(errorCode))
         })
-        setLoading(false) // Process is finished. Page is back to the normal state
+        setLoading(false)
     }  
 
     return (
         <div>
-            
             <Card className="mt-2">
                 <Card.Header>
-                    <h2>Welcome</h2>
+                    <h2>Welcome, {currentUser.displayName}</h2>
                 </Card.Header>
                 <Card.Body>
                         {error && <Alert variant="danger">{error}</Alert>}

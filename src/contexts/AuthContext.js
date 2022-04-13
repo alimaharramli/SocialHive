@@ -3,16 +3,13 @@ import {auth,authlib, error_codes} from "../firebase"
 const AuthContext = React.createContext()
 
 export function useAuth() {
-    // remote access to other class variables
     return useContext(AuthContext)
 }
 
-// get error messages
 export function errorMessage(code){
     return  error_codes[code]
 }
 
-// Authentication compononet with firebase authentication functions
 export function AuthProvider( { children } ) {
     const [currentUser, setCurrentUser] = useState()
     const [loading, setLoading] = useState(true)
@@ -31,6 +28,7 @@ export function AuthProvider( { children } ) {
     function resetPassword(email){
         return auth.sendPasswordResetEmail(email)
     }
+
     function checkPassword(password){
         const credential = authlib.EmailAuthProvider.credential(currentUser.email,password)
         return currentUser.reauthenticateWithCredential(credential)
@@ -44,6 +42,9 @@ export function AuthProvider( { children } ) {
         return currentUser.updatePassword(password)
     }
 
+    function updateProfile(object){
+        return currentUser.updateProfile(object)
+    }
     useEffect(() => {
         const unsubscribe = auth.onAuthStateChanged( user => {
                 setCurrentUser(user)
@@ -61,7 +62,8 @@ export function AuthProvider( { children } ) {
         resetPassword,
         checkPassword,
         updateEmail,
-        updatePassword
+        updatePassword,
+        updateProfile
     }
 
     return (

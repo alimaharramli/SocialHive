@@ -11,12 +11,12 @@ import UpdateProfile from "./UpdateProfile"
 
 function App() {
   return (
-    //Main Container of Application
-      <Container 
+    <Container 
         className="d-flex align-items-center justify-content-center"
         style={{ minHeight: "100vh" }}
         >
         <div className="w-100" style={{ maxWidth: "400px" }}>
+        <h2 className="text-center mb-4">SocialHive</h2>
           <Router>
             <AuthProvider>
               <Routes>

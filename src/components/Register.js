@@ -3,12 +3,12 @@ import { Form, Button, Card, Alert } from 'react-bootstrap'
 import {useAuth, errorMessage} from "../contexts/AuthContext"
 import { Link, Navigate } from "react-router-dom"
 
-
-
 export default function Register() {
     const emailRef = useRef()
     const passwordRef = useRef()
     const passwordConfirmRef = useRef()
+    const nameRef = useRef()
+    const snameRef = useRef()
     const {register,logout} = useAuth()
     const [error, setError] = useState('')
     const [success, setSuccess] = useState('')
@@ -16,20 +16,20 @@ export default function Register() {
 
     async function handleSubmit(e){
         e.preventDefault()
-        // Check password and its confirmation matches
+        const name=nameRef.current.value
+        const sname=snameRef.current.value
         if( passwordRef.current.value !== passwordConfirmRef.current.value ){
             return setError('Passwords do not match')
         }
     
-        setLoading(true) // Page is in loading mode until process is handled
-        // Register new user
+        setLoading(true)
         await register(emailRef.current.value, passwordRef.current.value).then(function(value){
             localStorage.setItem("VerifyMail","You have registered successfully. Check your email for verification link")
             setError('')
-            value.user.sendEmailVerification() // Send Email Verification
+            value.user.updateProfile({displayName: name+' '+sname})
+            value.user.sendEmailVerification()
             logout()
         }).catch(function(error) {
-            // Get error message
             var errorCode = error.code;
             console.log(errorCode)     
             setError(errorMessage(errorCode))
@@ -37,11 +37,10 @@ export default function Register() {
         })
 
         console.log(error)
-        setLoading(false) // Process is finished. Page is back to the normal state
+        setLoading(false)
     }
     const [redirectNow, setRedirectNow] = useState(false);
     return (
-        // HTML page
         <>
             <Card className="mt-2">  
                 <Card.Body style={{'backgroundColor': '#e9ecef'}}>
@@ -51,6 +50,14 @@ export default function Register() {
                     {success && setTimeout(() => setRedirectNow(true), 1500) && redirectNow && <Navigate to="/login" />}
                     {/* {redirectNow && <Navigate to="/login" />} */}
                     <Form onSubmit={handleSubmit}>
+                        <Form.Group id="First Name">
+                            <Form.Label>First Name</Form.Label>
+                            <Form.Control ref={nameRef} required/>
+                        </Form.Group>
+                        <Form.Group id="Last Name">
+                            <Form.Label>Last Name</Form.Label>
+                            <Form.Control ref={snameRef} required/>
+                        </Form.Group>
                         <Form.Group id="email">
                             <Form.Label>Email</Form.Label>
                             <Form.Control type="email" ref={emailRef} required/>

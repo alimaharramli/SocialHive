@@ -3,8 +3,6 @@ import { Form, Button, Card, Alert } from 'react-bootstrap'
 import {useAuth,errorMessage} from "../contexts/AuthContext"
 import { Link } from "react-router-dom"
 
-
-// Password Recovery for users who cant remember their password
 export default function ForgotPassword() {
     const emailRef = useRef()
     const {resetPassword} = useAuth()
@@ -16,19 +14,19 @@ export default function ForgotPassword() {
     async function handleSubmit(e){
         e.preventDefault()
 
-        setLoading(true) // Page is in loading mode until process is handled
+        
+        setLoading(true)
         await resetPassword(emailRef.current.value).then(function(value){
             setMessage('Check your email for further instructions')
             setError('')
         }).catch(function(error){
-            // get error code
             var errorCode = error.code;
             console.log(errorCode)     
             setError(errorMessage(errorCode))
             setMessage('')
         })
         
-        setLoading(false) // Process is finished. Page is back to the normal state
+        setLoading(false)
     }
 
     return (
