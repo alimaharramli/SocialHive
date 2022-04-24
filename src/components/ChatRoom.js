@@ -51,7 +51,7 @@ export default function ChatRoom(){
         bottomRef.current.scrollIntoView({behavior: 'smooth'});
     }
     return (
-        <div className='message-form-container' style={{ maxWidth: "1000px", width: "900px" }}>
+        <div className='message-form-container' style={{maxWidth: "900px" }}>
             <div className='messages-container' style={{marginBottom: "45px"}}>
                 {messages && messages.map(msg => <ChatMessage key={msg.id} message={msg} />)}
             
@@ -59,7 +59,7 @@ export default function ChatRoom(){
             </div>
             <form onSubmit={sendMessage}>
                 <input value={formValue} onChange={(e) => setFormValue(e.target.value)}/>
-                <button type="submit">Send</button>
+                <button className="btn btn-default" type="submit">Send</button>
             </form>
         </div>
         )

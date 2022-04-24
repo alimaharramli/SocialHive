@@ -64,36 +64,38 @@ export default function UpdateProfile() {
     }
 // HTML page of Update Profile Page
     return (
-        <div>
-            <Card className="mt-2">  
-                <Card.Body style={{'backgroundColor': '#e9ecef'}}>
-                    <h2 className="text-center mb-4">Update Profile</h2>
-                    {success && <Alert variant="success">{success}</Alert>}
-                    {error && <Alert variant="danger">{error}</Alert>}
-                    <Form onSubmit={handleSubmit} ref={formRef}>
-                        <Form.Group id="email">
-                            <Form.Label>Email</Form.Label>
-                            <Form.Control type="email" ref={emailRef} required defaultValue={currentUser.email}/>
-                        </Form.Group>
-                        <Form.Group id="cur-password">
-                            <Form.Label>Current Password</Form.Label>
-                            <Form.Control type="password" ref={curPasswordRef} required/>
-                        </Form.Group>
-                        <Form.Group id="password">
-                            <Form.Label>New Password</Form.Label>
-                            <Form.Control type="password" ref={passwordRef} placeholder="Leave blank to keep the same"/>
-                        </Form.Group>
-                        <Form.Group id="password-confirm">
-                            <Form.Label>Password Confirmation</Form.Label>
-                            <Form.Control type="password" ref={passwordConfirmRef} placeholder="Leave blank to keep the same"/>
-                        </Form.Group>
-                        <Button disabled={loading} className="w-100 mt-4" type="submit">Submit</Button>
-                    </Form>
-                </Card.Body>
-            </Card>
-        
-            <div className="w-100 text-center mt-2">
-                <Link to="/">Go back</Link>
+        <div className="w-100 d-flex align-items-center justify-content-center">
+            <div className="w-100" style={{ maxWidth: "400px" }}>
+                <Card className="mt-2">  
+                    <Card.Body style={{'backgroundColor': '#e9ecef'}}>
+                        <h2 className="text-center mb-4">Update Profile</h2>
+                        {success && <Alert variant="success">{success}</Alert>}
+                        {error && <Alert variant="danger">{error}</Alert>}
+                        <Form onSubmit={handleSubmit} ref={formRef}>
+                            <Form.Group id="email">
+                                <Form.Label>Email</Form.Label>
+                                <Form.Control type="email" ref={emailRef} required defaultValue={currentUser.email}/>
+                            </Form.Group>
+                            <Form.Group id="cur-password">
+                                <Form.Label>Current Password</Form.Label>
+                                <Form.Control type="password" ref={curPasswordRef} required/>
+                            </Form.Group>
+                            <Form.Group id="password">
+                                <Form.Label>New Password</Form.Label>
+                                <Form.Control type="password" ref={passwordRef} placeholder="Leave blank to keep the same"/>
+                            </Form.Group>
+                            <Form.Group id="password-confirm">
+                                <Form.Label>Password Confirmation</Form.Label>
+                                <Form.Control type="password" ref={passwordConfirmRef} placeholder="Leave blank to keep the same"/>
+                            </Form.Group>
+                            <Button disabled={loading} className="w-100 mt-4" type="submit">Submit</Button>
+                        </Form>
+                    </Card.Body>
+                </Card>
+            
+                <div className="w-100 text-center mt-2">
+                    <Link to="/">Go back</Link>
+                </div>
             </div>
         </div>
     )

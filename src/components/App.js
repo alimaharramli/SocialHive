@@ -13,11 +13,11 @@ import ChatRoom from "./ChatRoom"
 function App() {
   return (
     //Main Container of Application
-      <Container 
+      <div 
         className="d-flex align-items-center justify-content-center"
         style={{ minHeight: "100vh" }}
         >
-        <div className="w-100" style={{ maxWidth: "400px" }}>
+        <div className="w-100">
           <Router>
             <AuthProvider>
               <Routes>
@@ -43,7 +43,7 @@ function App() {
             </AuthProvider>
           </Router>
         </div>
-      </Container>
+      </div>
   )
 }
 

@@ -72,43 +72,45 @@ export default function Register() {
     const [redirectNow, setRedirectNow] = useState(false);
     return (
         // HTML page
-        <>
-            <Card className="mt-2">  
-                <Card.Body style={{'backgroundColor': '#e9ecef'}}>
-                    <h2 className="text-center mb-4">Register</h2>
-                    {success && <Alert variant="success">{success}</Alert>}
-                    {error && <Alert variant="danger">{error}</Alert>}
-                    {success && setTimeout(() => setRedirectNow(true), 1500) && redirectNow && <Navigate to="/login" />}
-                    {/* {redirectNow && <Navigate to="/login" />} */}
-                    <Form onSubmit={handleSubmit}>
-                         <Form.Group id="First Name">
-                            <Form.Label>First Name</Form.Label>
-                            <Form.Control ref={nameRef} required/>
-                        </Form.Group>
-                        <Form.Group id="Last Name">
-                            <Form.Label>Last Name</Form.Label>
-                            <Form.Control ref={sNameRef} required/>
-                        </Form.Group>
-                        <Form.Group id="email">
-                            <Form.Label>Email</Form.Label>
-                            <Form.Control type="email" ref={emailRef} required/>
-                        </Form.Group>
-                        <Form.Group id="password">
-                            <Form.Label>Password</Form.Label>
-                            <Form.Control type="password" ref={passwordRef} required/>
-                        </Form.Group>
-                        <Form.Group id="password-confirm">
-                            <Form.Label>Password Confirmation</Form.Label>
-                            <Form.Control type="password" ref={passwordConfirmRef} required/>
-                        </Form.Group>
-                        <Button disabled={loading} className="w-100 mt-4" type="submit">Register</Button>
-                    </Form>
-                </Card.Body>
-            </Card>
-        
-            <div className="w-100 text-center mt-2 color2">
-                Already have an account? <Link to="/login">Log In</Link>
+        <div className="w-100 d-flex align-items-center justify-content-center">
+            <div className="w-100" style={{ maxWidth: "400px" }}>
+                <Card className="mt-2">  
+                    <Card.Body style={{'backgroundColor': '#e9ecef'}}>
+                        <h2 className="text-center mb-4">Register</h2>
+                        {success && <Alert variant="success">{success}</Alert>}
+                        {error && <Alert variant="danger">{error}</Alert>}
+                        {success && setTimeout(() => setRedirectNow(true), 1500) && redirectNow && <Navigate to="/login" />}
+                        {/* {redirectNow && <Navigate to="/login" />} */}
+                        <Form onSubmit={handleSubmit}>
+                            <Form.Group id="First Name">
+                                <Form.Label>First Name</Form.Label>
+                                <Form.Control ref={nameRef} required/>
+                            </Form.Group>
+                            <Form.Group id="Last Name">
+                                <Form.Label>Last Name</Form.Label>
+                                <Form.Control ref={sNameRef} required/>
+                            </Form.Group>
+                            <Form.Group id="email">
+                                <Form.Label>Email</Form.Label>
+                                <Form.Control type="email" ref={emailRef} required/>
+                            </Form.Group>
+                            <Form.Group id="password">
+                                <Form.Label>Password</Form.Label>
+                                <Form.Control type="password" ref={passwordRef} required/>
+                            </Form.Group>
+                            <Form.Group id="password-confirm">
+                                <Form.Label>Password Confirmation</Form.Label>
+                                <Form.Control type="password" ref={passwordConfirmRef} required/>
+                            </Form.Group>
+                            <Button disabled={loading} className="w-100 mt-4" type="submit">Register</Button>
+                        </Form>
+                    </Card.Body>
+                </Card>
+            
+                <div className="w-100 text-center mt-2 color2">
+                    Already have an account? <Link to="/login">Log In</Link>
+                </div>
             </div>
-        </>
+        </div>
     )
 }

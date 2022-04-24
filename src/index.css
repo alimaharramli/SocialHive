@@ -178,7 +178,7 @@ border-radius: 25px;
 
 .message-form-container  input {
 line-height: 1.5;
-width: 100%;
+width: 80%;
 font-size: 1.5rem;
 background: #E6D5B8;
 color: white;
@@ -189,10 +189,11 @@ border-radius: 30px;
 }
 
 .message-form-container  button {
-background-color: #282c34; /* Green */
+background-color: #282c34; 
+width:20%;
 border: none;
 color: white;
-padding: 15px 32px;
+padding: 1% 2%;
 text-align: center;
 text-decoration: none;
 display: inline-block;
