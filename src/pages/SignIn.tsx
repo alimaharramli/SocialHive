@@ -12,7 +12,7 @@ import { auth } from "../shared/firebase";
 import { useQueryParams } from "../hooks/useQueryParams";
 import { useStore } from "../store";
 import SignInWithEmail from "../components/Auth/SignInWithEmail";
-
+import SignUpWithEmail from "../components/Auth/SignUpWithEmail";
 const SignIn: FC = () => {
   const { redirect } = useQueryParams();
 
@@ -22,6 +22,7 @@ const SignIn: FC = () => {
   const [error, setError] = useState("");
   const [isAlertOpened, setIsAlertOpened] = useState(false);
   const [isSignInWithEmailOpened,setIsSignInWithEmailOpened] = useState(false);
+  const [isSignUpWithEmailOpened,setIsSignUpWithEmailOpened] = useState(false);
 
   const handleSignIn = (provider: AuthProvider) => {
     setLoading(true);
@@ -68,11 +69,11 @@ const SignIn: FC = () => {
 
             <div className="mt-12 flex flex-1 flex-col items-center gap-4 md:items-start lg:mt-24">
               <h1 className="text-center text-3xl md:text-left md:text-4xl">
-                The best place for messaging
+                The best place for socializing
               </h1>
               <p className="text-center text-xl md:text-left md:text-2xl">
                 It's free, fast and secure. We make it easy and fun to stay
-                close to your favourite people.
+                close to people.
               </p>
 
               <button
@@ -93,6 +94,16 @@ const SignIn: FC = () => {
                 <img className="h-6 w-6" src="/facebook.svg" alt="" />
 
                 <span>Sign In With Facebook</span>
+              </button>
+            
+              <button
+                disabled={loading}
+                onClick={() => setIsSignUpWithEmailOpened(true)}
+                className="bg-amber-500 flex min-w-[250px] cursor-pointer items-center gap-3 rounded-md p-3 text-white transition duration-300 hover:brightness-90 disabled:!cursor-default disabled:!brightness-75"
+              >
+                <img className="h-6 w-6" src="/mail.svg" alt="" />
+
+                <span>Sign Up With Email</span>
               </button>
               <button
                 disabled={loading}
@@ -115,6 +126,7 @@ const SignIn: FC = () => {
         isError
       />
       <SignInWithEmail isOpened={isSignInWithEmailOpened} setIsOpened={setIsSignInWithEmailOpened} />
+      <SignUpWithEmail isOpened={isSignUpWithEmailOpened} setIsOpened={setIsSignUpWithEmailOpened} />
     </>
   );
 };

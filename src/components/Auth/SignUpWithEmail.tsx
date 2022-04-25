@@ -3,33 +3,39 @@ import { useStore } from "../../store";
 import React, { useRef, useState } from 'react';
 import { Form, Button,Alert} from 'react-bootstrap';
 import {auth} from "../../shared/firebase";
-import {signInWithEmailAndPassword, signOut} from "firebase/auth";
+import {createUserWithEmailAndPassword, signOut, updateProfile, sendEmailVerification} from "firebase/auth";
 import {error_codes} from "../../shared/constants";
-interface SignInWithEmailProps {
+interface SignUpWithEmailProps {
   isOpened: boolean;
   setIsOpened: (value: boolean) => void;    
 }
 
 
-const SignInWithEmail: FC<SignInWithEmailProps> = ({ isOpened, setIsOpened }) => {
-    const currentUser = useStore((state) => state.currentUser);
+const SignUpWithEmail: FC<SignUpWithEmailProps> = ({ isOpened, setIsOpened }) => {
+    const nameRef = useRef(null)
+    const sNameRef = useRef(null)
     const formRef = useRef(null)
     const emailRef = useRef(null)
     const passwordRef = useRef(null)
+    const passwordConfirmRef = useRef(null);
     const [error, setError] = useState('')
     const [loading, setLoading] = useState(false)
 
     async function handleSubmit(e : any){
         e.preventDefault()
-        localStorage.removeItem("VerifyMail")
-        localStorage.removeItem("VerifyMail")
-
+        const name = nameRef.current.value
+        const sName = sNameRef.current.value
+        const email = emailRef.current.value
+        
+        if(passwordRef.current.value !== passwordConfirmRef.current.value){
+            return setError('Passwords do not match')
+        }
         setLoading(true)  // Page is in loading mode until process is handled
-        await signInWithEmailAndPassword(auth,emailRef.current.value, passwordRef.current.value).then(function(value){
-            if(!value.user.emailVerified){
-                localStorage.setItem("VerifyEmail", `"${value.user.displayName}. You haven't verified your email yet. Please check your email for verification link.`)
-                signOut(auth)
-            }
+        await createUserWithEmailAndPassword(auth,emailRef.current.value, passwordRef.current.value).then(function(value) {
+            localStorage.setItem("VerifyEmail", `"${name} ${sName} You have registered successfully. Check your email for verification link.`)
+            updateProfile(value.user,{displayName: `${name} ${sName}`})
+            sendEmailVerification(value.user)
+            signOut(auth)
         }).catch((error) => {
             var errorCode = error.code;
             setError(error_codes[errorCode as keyof typeof error_codes])
@@ -53,7 +59,7 @@ const SignInWithEmail: FC<SignInWithEmailProps> = ({ isOpened, setIsOpened }) =>
             <div className="flex-1"></div>
             <div className="flex flex-1 items-center justify-center">
                 <h1 className="whitespace-nowrap text-center text-2xl text-yellow-400 text-b">
-                Sign In
+                Sign Up
                 </h1>
             </div>
             <div className="flex flex-1 items-center justify-end">
@@ -78,6 +84,22 @@ const SignInWithEmail: FC<SignInWithEmailProps> = ({ isOpened, setIsOpened }) =>
                 </div>}
             
             <Form className="w-full max-w-sm" ref={formRef} onSubmit={handleSubmit}>
+                <Form.Group className="md:flex md:items-center mb-6" id="name">
+                    <div className="md:w-1/3">
+                        <Form.Label className="block text-white-500 md:text-right mb-1 md:mb-0 pr-4" >Name</Form.Label>
+                    </div>
+                    <div className="md:w-2/3">
+                        <Form.Control className="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500" ref={nameRef} required/>
+                    </div>
+                </Form.Group>
+                <Form.Group className="md:flex md:items-center mb-6" id="sName">
+                    <div className="md:w-1/3">
+                        <Form.Label className="block text-white-500 md:text-right mb-1 md:mb-0 pr-4" >Surname</Form.Label>
+                    </div>
+                    <div className="md:w-2/3">
+                        <Form.Control className="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500" ref={sNameRef} required/>
+                    </div>
+                </Form.Group>
                 <Form.Group className="md:flex md:items-center mb-6" id="email">
                     <div className="md:w-1/3">
                         <Form.Label className="block text-white-500 md:text-right mb-1 md:mb-0 pr-4" >Email</Form.Label>
@@ -92,6 +114,14 @@ const SignInWithEmail: FC<SignInWithEmailProps> = ({ isOpened, setIsOpened }) =>
                     </div>
                     <div className="md:w-2/3">
                         <Form.Control className="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500" type="password" ref={passwordRef} required/>
+                    </div>
+                </Form.Group>
+                <Form.Group className="md:flex md:items-center mb-6" id="password-confirmation">
+                    <div className="md:w-1/3">
+                        <Form.Label className="block text-white-500 md:text-right mb-1 md:mb-0 pr-4" >Confirm Password</Form.Label>
+                    </div>
+                    <div className="md:w-2/3">
+                        <Form.Control className="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500" type="password" ref={passwordConfirmRef} required/>
                     </div>
                 </Form.Group>
                 <div className="md:flex md:items-center">
@@ -111,4 +141,4 @@ const SignInWithEmail: FC<SignInWithEmailProps> = ({ isOpened, setIsOpened }) =>
     );
 };
 
-export default SignInWithEmail;
+export default SignUpWithEmail;
