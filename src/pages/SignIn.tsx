@@ -108,7 +108,7 @@ const SignIn: FC = () => {
               <button
                 disabled={loading}
                 onClick={() => setIsSignInWithEmailOpened(true)}
-                className="bg-amber-500 flex min-w-[250px] cursor-pointer items-center gap-3 rounded-md p-3 text-white transition duration-300 hover:brightness-90 disabled:!cursor-default disabled:!brightness-75"
+                className="bg-orange-500 flex min-w-[250px] cursor-pointer items-center gap-3 rounded-md p-3 text-white transition duration-300 hover:brightness-90 disabled:!cursor-default disabled:!brightness-75"
               >
                 <img className="h-6 w-6" src="/mail.svg" alt="" />
 

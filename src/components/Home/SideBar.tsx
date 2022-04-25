@@ -16,6 +16,7 @@ import { useCollectionQuery } from "../../hooks/useCollectionQuery";
 import { useStore } from "../../store";
 import BeeSweeper from "./beesweeper";
 import initGame from "../../beesweeper.js"
+
 const SideBar: FC = () => {
   const currentUser = useStore((state) => state.currentUser);
 

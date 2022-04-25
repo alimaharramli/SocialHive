@@ -33,8 +33,9 @@ const SignUpWithEmail: FC<SignUpWithEmailProps> = ({ isOpened, setIsOpened }) =>
         setLoading(true)  // Page is in loading mode until process is handled
         await createUserWithEmailAndPassword(auth,emailRef.current.value, passwordRef.current.value).then(function(value) {
             localStorage.setItem("VerifyEmail", `"${name} ${sName} You have registered successfully. Check your email for verification link.`)
-            updateProfile(value.user,{displayName: `${name} ${sName}`})
+            updateProfile(value.user,{displayName: `${name} ${sName}`, photoURL: "https://lh3.googleusercontent.com/a/AATXAJye4fkjwZwdFvFkDeqrMIKsB9L-YZpXJUODss5D=s96-c"})
             sendEmailVerification(value.user)
+        
             signOut(auth)
         }).catch((error) => {
             var errorCode = error.code;
@@ -127,7 +128,7 @@ const SignUpWithEmail: FC<SignUpWithEmailProps> = ({ isOpened, setIsOpened }) =>
                 <div className="md:flex md:items-center">
                 <div className="md:w-1/3"></div>
                     <div className="md:w-2/3">
-                        <Button disabled={loading}  className="shadow bg-purple-500 hover:bg-purple-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded" type="submit">Log In</Button>
+                        <Button disabled={loading}  className="shadow bg-yellow-500 hover:bg-yellow-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded" type="submit">Register</Button>
                     </div>
                 </div>
             </Form>

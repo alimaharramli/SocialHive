@@ -9,7 +9,7 @@ import { useEffect, useState } from "react";
 
 import { db } from "../shared/firebase";
 import { formatDate } from "../shared/utils";
-
+import CryptoES from "crypto-es";
 let cache: { [key: string]: any } = {};
 
 export const useLastMessage = (conversationId: string) => {
@@ -49,7 +49,7 @@ export const useLastMessage = (conversationId: string) => {
             ? "A sticker"
             : type === "removed"
             ? "Message removed"
-            : (snapshot.docs[0].data().content as string);
+            : (CryptoES.AES.decrypt(snapshot.docs[0].data().content as string, "salam nadir necesen").toString(CryptoES.enc.Utf8) as string);
 
         const seconds = snapshot.docs[0]?.data()?.createdAt?.seconds;
         const formattedDate = formatDate(seconds ? seconds * 1000 : Date.now());

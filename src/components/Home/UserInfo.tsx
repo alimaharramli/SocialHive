@@ -103,9 +103,7 @@ const UserInfo: FC<UserInfoProps> = ({ isOpened, setIsOpened }) => {
             
           </div>
           
-          <p className="mt-4 text-gray-400">
-            Change your google / facebook avatar or username to update it here
-          </p>
+          
         </div>
       </div>
     </div>

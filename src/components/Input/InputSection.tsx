@@ -31,7 +31,7 @@ import StickerPicker from "./StickerPicker";
 import { formatFileName } from "../../shared/utils";
 import { useParams } from "react-router-dom";
 import { useStore } from "../../store";
-
+import CryptoES from "crypto-es";
 const Picker = lazy(() => import("./EmojiPicker"));
 
 interface InputSectionProps {
@@ -125,7 +125,7 @@ const InputSection: FC<InputSectionProps> = ({
       collection(db, "conversations", conversationId as string, "messages"),
       {
         sender: currentUser?.uid,
-        content: replacedInputValue.trim(),
+        content: CryptoES.AES.encrypt(replacedInputValue.trim(), 'salam nadir necesen').toString(),
         type: "text",
         createdAt: serverTimestamp(),
         replyTo: replyInfo?.id || null,

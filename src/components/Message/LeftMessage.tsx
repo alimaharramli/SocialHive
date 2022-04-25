@@ -17,7 +17,7 @@ import ReplyBadge from "../Chat/ReplyBadge";
 import ReplyIcon from "../Icon/ReplyIcon";
 import SpriteRenderer from "../SpriteRenderer";
 import { useStore } from "../../store";
-
+import CryptoES from "crypto-es";
 interface LeftMessageProps {
   message: MessageItem;
   conversation: ConversationInfo;
@@ -42,7 +42,10 @@ const LeftMessage: FC<LeftMessageProps> = ({
   const formattedDate = formatDate(
     message.createdAt.seconds ? message.createdAt.seconds * 1000 : Date.now()
   );
-
+  if(message.type==="text")
+  var text_content = CryptoES.AES.decrypt(message.content, "salam nadir necesen").toString(CryptoES.enc.Utf8);
+  else 
+  var text_content = message.content
   return (
     <div id={`message-${message.id}`}>
       <div
@@ -76,13 +79,13 @@ const LeftMessage: FC<LeftMessageProps> = ({
 
         {message.type === "text" ? (
           <>
-            {EMOJI_REGEX.test(message.content) ? (
+            {EMOJI_REGEX.test(text_content) ? (
               <div
                 onClick={(e) => e.stopPropagation()}
                 title={formattedDate}
                 className="text-4xl"
               >
-                {message.content}
+                {text_content}
               </div>
             ) : (
               <div
@@ -94,7 +97,7 @@ const LeftMessage: FC<LeftMessageProps> = ({
                     : ""
                 }`}
               >
-                {splitLinkFromMessage(message.content).map((item, index) => (
+                {splitLinkFromMessage(text_content).map((item, index) => (
                   <Fragment key={index}>
                     {typeof item === "string" ? (
                       <span>{item}</span>
@@ -122,11 +125,11 @@ const LeftMessage: FC<LeftMessageProps> = ({
               }}
               title={formattedDate}
               className="max-w-[60%] cursor-pointer transition duration-300 hover:brightness-[85%]"
-              src={message.content}
+              src={text_content}
               alt=""
             />
             <ImageView
-              src={message.content}
+              src={text_content}
               isOpened={isImageViewOpened}
               setIsOpened={setIsImageViewOpened}
             />
@@ -152,7 +155,7 @@ const LeftMessage: FC<LeftMessageProps> = ({
             </div>
 
             <a
-              href={message.content}
+              href={text_content}
               download
               target="_blank"
               rel="noopener noreferrer"
@@ -164,7 +167,7 @@ const LeftMessage: FC<LeftMessageProps> = ({
           <SpriteRenderer
             onClick={(e) => e.stopPropagation()}
             title={formattedDate}
-            src={message.content}
+            src={text_content}
             size={130}
           />
         ) : (

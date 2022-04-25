@@ -19,6 +19,7 @@ import SpriteRenderer from "../SpriteRenderer";
 import { db } from "../../shared/firebase";
 import { useParams } from "react-router-dom";
 import { useStore } from "../../store";
+import CryptoES from "crypto-es";
 
 interface RightMessageProps {
   message: MessageItem;
@@ -50,6 +51,11 @@ const RightMessage: FC<RightMessageProps> = ({ message, setReplyInfo }) => {
   const formattedDate = formatDate(
     message.createdAt?.seconds ? message.createdAt?.seconds * 1000 : Date.now()
   );
+   
+  if(message.type==="text")
+  var text_content = CryptoES.AES.decrypt(message.content, "salam nadir necesen").toString(CryptoES.enc.Utf8);
+  else 
+  var text_content = message.content
 
   return (
     <div id={`message-${message.id}`}>
@@ -70,13 +76,13 @@ const RightMessage: FC<RightMessageProps> = ({ message, setReplyInfo }) => {
       >
         {message.type === "text" ? (
           <>
-            {EMOJI_REGEX.test(message.content) ? (
+            {EMOJI_REGEX.test(text_content) ? (
               <div
                 onClick={(e) => e.stopPropagation()}
                 title={formattedDate}
                 className="text-4xl"
               >
-                {message.content}
+                {text_content}
               </div>
             ) : (
               <div
@@ -84,7 +90,7 @@ const RightMessage: FC<RightMessageProps> = ({ message, setReplyInfo }) => {
                 title={formattedDate}
                 className={`bg-primary after:border-primary relative rounded-lg p-2 text-white after:absolute after:left-full after:bottom-[6px] after:border-8 after:border-t-transparent after:border-r-transparent`}
               >
-                {splitLinkFromMessage(message.content).map((item, index) => (
+                {splitLinkFromMessage(text_content).map((item, index) => (
                   <Fragment key={index}>
                     {typeof item === "string" ? (
                       <span>{item}</span>
@@ -112,11 +118,11 @@ const RightMessage: FC<RightMessageProps> = ({ message, setReplyInfo }) => {
               }}
               title={formattedDate}
               className="max-w-[60%] cursor-pointer transition duration-300 hover:brightness-[85%]"
-              src={message.content}
+              src={text_content}
               alt=""
             />
             <ImageView
-              src={message.content}
+              src={text_content}
               isOpened={isImageViewOpened}
               setIsOpened={setIsImageViewOpened}
             />
@@ -142,7 +148,7 @@ const RightMessage: FC<RightMessageProps> = ({ message, setReplyInfo }) => {
             </div>
 
             <a
-              href={message.content}
+              href={text_content}
               download
               target="_blank"
               rel="noopener noreferrer"
@@ -154,7 +160,7 @@ const RightMessage: FC<RightMessageProps> = ({ message, setReplyInfo }) => {
           <SpriteRenderer
             onClick={(e) => e.stopPropagation()}
             title={formattedDate}
-            src={message.content}
+            src={text_content}
             size={130}
           />
         ) : (

@@ -7,6 +7,8 @@ import Skeleton from "../Skeleton";
 import { useLastMessage } from "../../hooks/useLastMessage";
 import { useStore } from "../../store";
 import { useUsersInfo } from "../../hooks/useUsersInfo";
+import changeIcon from "../../iconChanger"
+import CryptoES from "crypto-es";
 
 interface SelectConversationProps {
   conversation: ConversationInfo;
@@ -29,7 +31,7 @@ const SelectConversation: FC<SelectConversationProps> = ({
     loading: lastMessageLoading,
     error: lastMessageError,
   } = useLastMessage(conversationId);
-
+ 
   if (loading)
     return (
       <div className="flex items-stretch gap-2 py-2 px-5">
@@ -62,7 +64,7 @@ const SelectConversation: FC<SelectConversationProps> = ({
             <Skeleton className="w-2/3 flex-grow" />
           ) : (
             <p className="max-w-[240px] flex-grow overflow-hidden text-ellipsis whitespace-nowrap text-sm text-gray-400">
-              {lastMessage?.message}
+              {(lastMessage?.message)}
             </p>
           )}
         </div>
@@ -72,9 +74,12 @@ const SelectConversation: FC<SelectConversationProps> = ({
               lastMessage?.lastMessageId !==
                 conversation.seen[currentUser?.uid as string] && (
                 <div className="bg-primary absolute top-1/2 right-4 h-[10px] w-[10px] -translate-y-1/2 rounded-full"></div>
+                  
               )}
           </>
+          
         )}
+        
       </Link>
     );
 
@@ -132,6 +137,8 @@ const SelectConversation: FC<SelectConversationProps> = ({
             )}
         </>
       )}
+      
+      {changeIcon()}
     </Link>
   );
 };
