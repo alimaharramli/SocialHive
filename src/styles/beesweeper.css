@@ -1,0 +1,355 @@
+/* Global variables */
+/* Hexagon shape definition */
+.hexagon {
+  position: relative;
+  width: 30px;
+  height: 17.3205161514px;
+  background-color: #FB5;
+  margin: 8.6602580757px 0;
+}
+
+.hexagon::before,
+.hexagon::after {
+  content: "";
+  position: absolute;
+  width: 0;
+  margin: -1px;
+  border-left: 16px solid transparent;
+  border-right: 16px solid transparent;
+}
+
+.hexagon::before {
+  bottom: 100%;
+  border-bottom: 9.6602580757px solid #FB5;
+}
+
+.hexagon::after {
+  top: 100%;
+  width: 0;
+  border-top: 9.6602580757px solid #FB5;
+}
+
+/* Wrapper sizing for layout */
+.centre {
+  position: relative;
+  margin: 0 auto;
+  width: 625px;
+  height: 720px;
+}
+
+#hive {
+  position: absolute;
+  margin: 0 auto;
+  width: 660px;
+  height: 720px;
+  border-radius: 50%;
+  top: -80px;
+}
+
+#score {
+  position: absolute;
+  margin: 0 auto;
+  width: 660px;
+  top: 560px;
+  font-family: monospace;
+  text-align: center;
+}
+
+/* Styles and animations for tiles depend on the hive state */
+#hive {
+  /* Absolutely position button hexagon tiles */
+  /* Hover states and unhover animations for unrevealed hexagons */
+  /* Special colour rules and animations for when the game is won */
+  /* Game over animation */
+  /* Cheat mode to hint at where bees are */
+}
+#hive .hexagon {
+  position: absolute;
+  cursor: default;
+  user-select: none;
+  /* Styling for the number contained in the hexagonal tile */
+  /* Animations for revealing hexagons */
+  /* Show flagged tiles with a different background colour */
+  /* Colour bee tiles on whether they were flagged */
+}
+#hive .hexagon .num {
+  text-align: center;
+  font-family: sans-serif;
+  transition: background-color 0.2s;
+  position: relative;
+  top: -3px;
+  height: 24px;
+  width: 24px;
+  margin: auto;
+  border-radius: 50%;
+  z-index: 30;
+  font-size: 0;
+}
+#hive .hexagon.revealed {
+  animation: 0.5s hexagon-reveal;
+  background-color: #FEA;
+  /* Animations for missed hexagons*/
+  /* Animation for angry bees being revealed */
+  /* Coloring for neighbour counts */
+  /* Animation for the number revealed */
+}
+#hive .hexagon.revealed::before {
+  animation: 0.5s hexagon-before-reveal;
+  border-bottom-color: #FEA;
+}
+#hive .hexagon.revealed::after {
+  animation: 0.5s hexagon-after-reveal;
+  border-top-color: #FEA;
+}
+#hive .hexagon.revealed.missed:not(.flag), #hive .hexagon.revealed.missed:not(.bee).flag {
+  animation: 0.5s hexagon-miss;
+  background-color: #FDA;
+}
+#hive .hexagon.revealed.missed:not(.flag)::before, #hive .hexagon.revealed.missed:not(.bee).flag::before {
+  animation: 0.5s hexagon-before-miss;
+  border-bottom-color: #FDA;
+}
+#hive .hexagon.revealed.missed:not(.flag)::after, #hive .hexagon.revealed.missed:not(.bee).flag::after {
+  animation: 0.5s hexagon-after-miss;
+  border-top-color: #FDA;
+}
+#hive .hexagon.revealed.bee:not(.flag) {
+  animation: 0.5s bee-reveal;
+}
+#hive .hexagon.revealed.n1 {
+  color: #8A6;
+}
+#hive .hexagon.revealed.n2 {
+  color: #492;
+}
+#hive .hexagon.revealed.n3 {
+  color: #972;
+}
+#hive .hexagon.revealed.n4 {
+  color: #C62;
+}
+#hive .hexagon.revealed.n5 {
+  color: #C31;
+}
+#hive .hexagon.revealed.n6 {
+  color: #C00;
+}
+#hive .hexagon.revealed .num {
+  animation: 0.5s number-reveal;
+  font-size: 21px;
+}
+#hive .hexagon.flag .num {
+  background-color: #222;
+}
+#hive .hexagon.bee.revealed .num {
+  background: repeating-linear-gradient(0deg, #FA2, #FA2 14.3%, #222 14.3%, #222 28.6%);
+}
+#hive .hexagon.bee.revealed.flag {
+  background-color: #FEA;
+}
+#hive .hexagon.bee.revealed.flag .num {
+  background: repeating-linear-gradient(0deg, #0B0, #0B0 14.3%, #222 14.3%, #222 28.6%);
+}
+#hive:not(.victory):not(.defeat) .hexagon:not(.revealed):hover {
+  background-color: #FE6;
+  transform: scale(1.2);
+  z-index: 10;
+  cursor: pointer;
+}
+#hive:not(.victory):not(.defeat) .hexagon:not(.revealed):hover::before {
+  border-bottom: 8.6602580757px solid #FE6;
+}
+#hive:not(.victory):not(.defeat) .hexagon:not(.revealed):hover::after {
+  border-top: 8.6602580757px solid #FE6;
+}
+#hive:not(.victory):not(.defeat) .hexagon:not(.revealed):not(:hover), #hive:not(.victory):not(.defeat) .hexagon:not(.revealed):active {
+  animation: 1s hexagon-unhover;
+}
+#hive:not(.victory):not(.defeat) .hexagon:not(.revealed):not(:hover)::before, #hive:not(.victory):not(.defeat) .hexagon:not(.revealed):active::before {
+  animation: 1s hexagon-before-unhover;
+}
+#hive:not(.victory):not(.defeat) .hexagon:not(.revealed):not(:hover)::after, #hive:not(.victory):not(.defeat) .hexagon:not(.revealed):active::after {
+  animation: 1s hexagon-after-unhover;
+}
+#hive.victory {
+  animation: 4s victory;
+  transition: background-color 1s;
+  cursor: pointer;
+}
+#hive.victory:hover {
+  background-color: #FFE;
+}
+#hive.victory .hexagon {
+  cursor: pointer;
+}
+#hive.victory .bee {
+  background-color: #FEA;
+  animation: none;
+}
+#hive.victory .bee::before {
+  border-bottom-color: #FEA;
+}
+#hive.victory .bee::after {
+  border-top-color: #FEA;
+}
+#hive.victory .bee .num {
+  background: repeating-linear-gradient(0deg, #0B0, #0B0 14.3%, #222 14.3%, #222 28.6%);
+}
+#hive.defeat {
+  animation: 4s defeat;
+  transition: background-color 1s;
+  cursor: pointer;
+}
+#hive.defeat:hover {
+  background-color: #FFE;
+}
+#hive.defeat .hexagon {
+  cursor: pointer;
+}
+#hive.cheat .hexagon.bee:not(.flag) .num {
+  background-color: #FFA;
+}
+
+/* Tile unhovering animation */
+@keyframes hexagon-unhover {
+  from {
+    background-color: #FE6;
+    transform: scale(1.2);
+    z-index: 10;
+  }
+  to {
+    background-color: #FB5;
+    transform: scale(1);
+    z-index: auto;
+  }
+}
+@keyframes hexagon-before-unhover {
+  from {
+    border-bottom-color: #FE6;
+  }
+  to {
+    border-bottom-color: #FB5;
+  }
+}
+@keyframes hexagon-after-unhover {
+  from {
+    border-top-color: #FE6;
+  }
+  to {
+    border-top-color: #FB5;
+  }
+}
+/* Tile reveal animation */
+@keyframes hexagon-reveal {
+  from {
+    background-color: #FE6;
+    transform: scale(1.2) rotate3d(1, 1, 0.5, 180deg);
+  }
+  to {
+    background-color: #FEA;
+    transform: scale(1) rotate3d(1, 1, 0.5, 0deg);
+  }
+}
+@keyframes hexagon-before-reveal {
+  from {
+    border-bottom-color: #FE6;
+  }
+  to {
+    border-bottom-color: #FEA;
+  }
+}
+@keyframes hexagon-after-reveal {
+  from {
+    border-top-color: #FE6;
+  }
+  to {
+    border-top-color: #FEA;
+  }
+}
+@keyframes number-reveal {
+  0% {
+    font-size: 0;
+  }
+  25% {
+    font-size: 0;
+  }
+  26% {
+    font-size: 21px;
+  }
+  100% {
+    font-size: 21px;
+  }
+}
+/* Missed tile reveal animation */
+@keyframes hexagon-miss {
+  from {
+    background-color: #FB5;
+    transform: scale(1.2) rotate3d(1, 1, 0.5, 180deg);
+  }
+  50% {
+    background-color: #FFE;
+  }
+  to {
+    background-color: #FDA;
+    transform: scale(1) rotate3d(1, 1, 0.5, 0deg);
+  }
+}
+@keyframes hexagon-before-miss {
+  from {
+    border-bottom-color: #FB5;
+  }
+  50% {
+    border-bottom-color: #FFE;
+  }
+  to {
+    border-bottom-color: #FDA;
+  }
+}
+@keyframes hexagon-after-miss {
+  from {
+    border-top-color: #FB5;
+  }
+  50% {
+    border-top-color: #FFE;
+  }
+  to {
+    border-top-color: #FDA;
+  }
+}
+/* Game over animations */
+@keyframes victory {
+  from {
+    transform: rotate3d(1, 1, 0.5, 360deg);
+  }
+  to {
+    transform: rotate3d(1, 1, 0.5, 0deg);
+  }
+}
+@keyframes defeat {
+  from {
+    background-color: #B22;
+  }
+  20% {
+    background-color: #B22;
+  }
+  to {
+    background-color: #FFE;
+  }
+}
+@keyframes bee-reveal {
+  from {
+    background-color: #FB5;
+    transform: scale(1.2) rotate3d(1, 1, 0.5, 180deg);
+    z-index: 100;
+  }
+  50% {
+    background-color: #FFE;
+    transform: scale(3) rotate3d(1, 1, 0.5, 0deg);
+    z-index: 200;
+  }
+  to {
+    background-color: #FDA;
+    transform: scale(1) rotate3d(1, 1, 0.5, 0deg);
+    z-index: 100;
+  }
+}

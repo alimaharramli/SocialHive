@@ -1,4 +1,6 @@
 node_modules
-build
-yarn.lock
-.firebaserc
+.DS_Store
+dist
+dist-ssr
+*.local
+.env
