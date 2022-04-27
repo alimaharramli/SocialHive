@@ -32,11 +32,10 @@ const SignUpWithEmail: FC<SignUpWithEmailProps> = ({ isOpened, setIsOpened }) =>
         }
         setLoading(true)  // Page is in loading mode until process is handled
         await createUserWithEmailAndPassword(auth,emailRef.current.value, passwordRef.current.value).then(function(value) {
-            localStorage.setItem("VerifyEmail", `"${name} ${sName} You have registered successfully. Check your email for verification link.`)
             updateProfile(value.user,{displayName: `${name} ${sName}`, photoURL: "https://lh3.googleusercontent.com/a/AATXAJye4fkjwZwdFvFkDeqrMIKsB9L-YZpXJUODss5D=s96-c"})
             sendEmailVerification(value.user)
-        
             signOut(auth)
+            alert("Please check your email for verification link.")
         }).catch((error) => {
             var errorCode = error.code;
             setError(error_codes[errorCode as keyof typeof error_codes])

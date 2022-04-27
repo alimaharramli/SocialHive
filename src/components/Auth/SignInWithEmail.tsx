@@ -27,7 +27,7 @@ const SignInWithEmail: FC<SignInWithEmailProps> = ({ isOpened, setIsOpened }) =>
         setLoading(true)  // Page is in loading mode until process is handled
         await signInWithEmailAndPassword(auth,emailRef.current.value, passwordRef.current.value).then(function(value){
             if(!value.user.emailVerified){
-                localStorage.setItem("VerifyEmail", `"${value.user.displayName}. You haven't verified your email yet. Please check your email for verification link.`)
+                alert(`${value.user.displayName} please check your email for verification link`)
                 signOut(auth)
             }
         }).catch((error) => {
